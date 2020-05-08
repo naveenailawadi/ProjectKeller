@@ -174,7 +174,11 @@ class MicrosoftBot:
     # create a function to convert xuids back to gamertags
     def get_gamertag(self, xuid):
         profile = self.profile_provider.get_profile_by_xuid(xuid).json()
-        settings = profile['profileUsers'][0]['settings']
+        try:
+            settings = profile['profileUsers'][0]['settings']
+        except KeyError:
+            time.sleep(61)
+            return None
         info_dict = {pair['id']: pair['value'] for pair in settings}
         gamertag = info_dict['Gamertag']
 
@@ -282,7 +286,8 @@ class XBot(MicrosoftBot):
         # find overlapping games --> add to gamertags if it the gamer matches one of the games
         for gamer in candidates:
             gamertag = self.get_gamertag(gamer)
-            print(f"found {gamertag}")
+            if gamertag:
+                print(f"found {gamertag}")
 
             # this protexts against getting nonetype errrors
             if not gamertag:
@@ -303,7 +308,7 @@ class XBot(MicrosoftBot):
                 break
 
             # sleep to avoid throttling
-            time.sleep(5)
+            time.sleep(10)
 
         # return the gamertags
         return gamertags
