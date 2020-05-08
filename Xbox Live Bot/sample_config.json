@@ -1,9 +1,14 @@
 {
-    "email": "<your email>",
-    "password": "<your password>",
-    "X-Auth": "<X-Auth Token>",
-    "max_recents": <a number of recent people to scrape offline>,
-    "message": "<message body>",
+    "X-Auth": "<your x-auth key>",
     "block_start_time_utc": <utc timestamp>,
-    "block_stop_time_utc": <utc timestamp>
+    "block_stop_time_utc": <utc timestamp>,
+    "email": "<email>",
+    "games": [
+        "<a game>",
+        "<a game>"
+    ],
+    "max_messages": <amount of messages to send>,
+    "max_recents": <amount of initial scrapes>,
+    "message": "<message body>",
+    "password": "<your password>"
 }

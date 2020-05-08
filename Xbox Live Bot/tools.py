@@ -18,7 +18,7 @@ class ConfigManager:
         self.export_file(self.information)
 
     def export_file(self, dictionary):
-        dumpable = json.dumps(dictionary)
+        dumpable = json.dumps(dictionary, indent=4, sort_keys=True)
 
         with open(self.filepath, 'w') as outfile:
             outfile.write(dumpable)
