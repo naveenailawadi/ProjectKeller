@@ -1,0 +1,16 @@
+1588897262998	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/4d/b7w37wb14zb7dz0y5bvphlkr0000gn/T/rust_mozprofile.1NnrnWZUzHya"
+1588897263697	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1588897263698	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1588897263698	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1588897263698	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1588897265511	Marionette	INFO	Listening on port 51967
+1588897265609	Marionette	WARN	TLS certificate errors will be ignored for this session
+1588897289661	Marionette	INFO	Stopped listening on port 51967
+1588897370822	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/4d/b7w37wb14zb7dz0y5bvphlkr0000gn/T/rust_mozprofile.I1VuoiQSHCk5"
+1588897371261	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1588897371261	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1588897371261	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1588897371261	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1588897372729	Marionette	INFO	Listening on port 52118
+1588897372770	Marionette	WARN	TLS certificate errors will be ignored for this session
+1588897397310	Marionette	INFO	Stopped listening on port 52118
