@@ -6,6 +6,7 @@ from xbox.webapi.api.provider.profile import ProfileProvider
 from xbox.webapi.api.provider.people import PeopleProvider
 from tools import ListManager
 from xboxapi.client import Client
+from requests.exceptions import ReadTimeout
 from random import shuffle
 import requests
 import time
@@ -195,7 +196,7 @@ class MicrosoftBot:
             print(f"{gamertag} is a certified loner")
             friends_raw = []
             # this often means that the api is blocking us
-            time.sleep(61)
+            time.sleep(180)
 
         xuids = {info['xuid'] for info in friends_raw}
 
@@ -231,7 +232,11 @@ class XBot(MicrosoftBot):
         xuid = self.get_xuid(gamertag)
         gamer = self.client.gamer(gamertag=gamertag, xuid=xuid)
 
-        titles = gamer.get('xboxonegames')['titles']
+        try:
+            titles = gamer.get('xboxonegames')['titles']
+        except ReadTimeout:
+            time.sleep(30)
+            return []
 
         games = [title['name'] for title in titles]
 
