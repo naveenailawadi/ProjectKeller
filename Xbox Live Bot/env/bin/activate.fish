@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/naveenailawadi/Desktop/GitHub/2020/Xbox Live Bot/env"
+set -gx VIRTUAL_ENV "/Users/naveenailawadi/Desktop/GitHub/ProjectKeller/Xbox Live Bot/env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

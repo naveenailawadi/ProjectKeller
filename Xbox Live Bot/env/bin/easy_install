@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/naveenailawadi/Desktop/GitHub/2020/Xbox Live Bot/env/bin/python3" "$0" "$@"
+'''exec' "/Users/naveenailawadi/Desktop/GitHub/ProjectKeller/Xbox Live Bot/env/bin/python3" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

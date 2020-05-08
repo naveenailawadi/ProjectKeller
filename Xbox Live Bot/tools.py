@@ -37,7 +37,8 @@ class RecordManager:
 
     def get_removables(self, start_time_utc, stop_time_utc):
         # get removables from the old df
-        removables_df = self.old_df[self.old_df['sent_time'] > start_time_utc][self.old_df['sent_time'] < stop_time_utc]
+        removables_df = self.old_df[self.old_df['sent_time'] > start_time_utc]
+        removables_df = removables_df[removables_df['sent_time'] < stop_time_utc]
         removables = set(removables_df['gamertag'])
 
         # get removables from the friends df
@@ -49,7 +50,7 @@ class RecordManager:
 
     # create a function to add new records to he old dataframe
     def add_records(self, to_send, message):
-        send_time = time.time()
+        send_time = float(time.time())
         data = [[recipient, message, send_time] for recipient in to_send]
         appendable_df = pd.DataFrame(data, columns=self.header_row)
         output_df = self.old_df.append(appendable_df, ignore_index=True)

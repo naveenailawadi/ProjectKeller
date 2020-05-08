@@ -36,7 +36,6 @@ scraper.create_webdriver()
 scraper.login()
 scraper.enter_xbox_homepage()
 recents = set(scraper.get_recents(MAX_RECENTS))
-print(recents)
 scraper.close_webdriver()
 
 # get people that have already been sent a message
@@ -61,10 +60,10 @@ for gamertag in to_send:
 
 
 # add the sent data to the dataframe
-send_time = time.time()
 record_manager.add_records(sent_messages, MESSAGE)
 
 # update the json to the current time
+send_time = float(time.time())
 config_manager.update_key('block_stop_time_utc', send_time)
 
 
