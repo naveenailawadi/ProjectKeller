@@ -42,9 +42,10 @@ scraper.close_webdriver()
 # get people that have already been sent a message
 removables = record_manager.get_removables(BLOCK_START_TIME_UTC, BLOCK_STOP_TIME_UTC)
 
+recents = recents - removables
+
 # extrapolate of the current recents to get more potential games that play specific games
 recents = recents | xbot.extrapolate(recents, GAMES, MAX_MESSAGES)
-print(recents)
 
 # this will keep the bot to always (at least slightly) underperform the max messages
 to_send = list(recents - removables)
