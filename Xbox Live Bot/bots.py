@@ -11,6 +11,7 @@ from random import shuffle
 import requests
 import time
 import json
+from json.decoder import JSONDecodeError
 
 LOGIN = 'https://login.live.com/login.srf'
 XBOX_SITE = 'https://account.xbox.com/en-US/social?xr=shellnav'
@@ -236,6 +237,10 @@ class XBot(MicrosoftBot):
             titles = gamer.get('xboxonegames')['titles']
         except ReadTimeout:
             time.sleep(30)
+            return []
+        except JSONDecodeError:
+            time.sleep(30)
+            print(f"{gamertag} isn't a real gamer.")
             return []
 
         games = [title['name'] for title in titles]
