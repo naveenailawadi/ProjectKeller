@@ -54,9 +54,15 @@ sent_messages = []
 
 for gamertag in to_send:
     try:
-        xbot.send_message(gamertag, MESSAGE)
-        sent_messages.append(gamertag)
-        print(f"Message sent to {gamertag}")
+        sent = xbot.send_message(gamertag, MESSAGE)
+
+        # make sure the message was sent
+        if sent:
+            sent_messages.append(gamertag)
+            print(f"Message sent to {gamertag}")
+        else:
+            time.sleep(30)
+
     except ReadTimeout:
         # sleep extra to avoid getting banned
         time.sleep(30)

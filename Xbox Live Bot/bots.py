@@ -267,12 +267,22 @@ class XBot(MicrosoftBot):
         return response
 
     def send_message(self, gamertag, message):
-        # create a game object
-        xuid = self.get_xuid(gamertag)
-        gamer = self.client.gamer(gamertag, xuid)
+        # set a boolean to whether or not the message was sent
+        sent = False
 
-        # send the message
-        gamer.send_message(message)
+        # create a game object
+        try:
+            xuid = self.get_xuid(gamertag)
+            gamer = self.client.gamer(gamertag, xuid)
+
+            # send the message
+            gamer.send_message(message)
+
+            sent = True
+        except JSONDecodeError:
+            pass
+
+        return sent
 
     # create a method that extrapolates on a set of gamers and adds to it
     # games --> particular games the gamer has to play to be added to the set
