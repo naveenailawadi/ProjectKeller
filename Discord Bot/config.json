@@ -1,0 +1,6 @@
+{
+    "token": "my token",
+    "username": "my username",
+    "days_inactive": 30,
+    "wait_time": 100
+}
