@@ -1,6 +1,17 @@
 import discord
-from tokens import TOKEN, OWNER
 import asyncio
+import json
+
+# create constants with configuration file
+with open('config.json', 'r') as config:
+    # open the file
+    information = json.load(config)
+
+    # load the data into constants
+    TOKEN = information['token']
+    OWNER = information['username']
+    DAYS = information['days_inactive']
+    WAIT = information['wait_time']
 
 # client object creation
 client = discord.Client()
@@ -12,10 +23,13 @@ async def clean_server():
     await client.wait_until_ready()
     while (client.is_closed):
         for guild in client.guilds:
-            members_kicked = await guild.prune_members(days=30, compute_prune_count=True, reason="30 days of inactivity")
-            print(f'{members_kicked} members pruned')
-        # wait 100 seconds before checking for inactive members again
-        await asyncio.sleep(100)
+            members_kicked = await guild.prune_members(days=DAYS, compute_prune_count=True, reason="30 days of inactivity")
+            kick_message = (f'{members_kicked} members pruned for {DAYS} days of inactivity')
+            # send message to all channels in each guild regarding the prunning
+            for channel in guild.text_channels:
+                await channel.send(kick_message)
+        # wait WAIT seconds before checking for inactive members again
+        await asyncio.sleep(WAIT)
 
 
 # when you type ".stop" the program ends
