@@ -12,6 +12,7 @@ with open('config.json', 'r') as config:
     OWNER = information['username']
     DAYS = information['days_inactive']
     WAIT = information['wait_time']
+    MESSAGE = information['send_message']
 
 # client object creation
 client = discord.Client()
@@ -23,11 +24,19 @@ async def clean_server():
     await client.wait_until_ready()
     while (client.is_closed):
         for guild in client.guilds:
-            members_kicked = await guild.prune_members(days=DAYS, compute_prune_count=True, reason="30 days of inactivity")
-            kick_message = (f'{members_kicked} members pruned for {DAYS} days of inactivity')
-            # send message to all channels in each guild regarding the prunning
-            for channel in guild.text_channels:
-                await channel.send(kick_message)
+            members_kicked = await guild.prune_members(days=DAYS, compute_prune_count=True, reason=f"{DAYS} days of inactivity")
+            # send message if users are kicked and if client specifies
+            if (MESSAGE and members_kicked):
+                #plural in message
+                if (members_kicked == 1):
+                    kick_message = (
+                        f'{members_kicked} member pruned for {DAYS} days of inactivity')
+                else:
+                    kick_message = (
+                        f'{members_kicked} members pruned for {DAYS} days of inactivity')
+                # send message to all channels in each guild regarding the prunning
+                for channel in guild.text_channels:
+                    await channel.send(kick_message)
         # wait WAIT seconds before checking for inactive members again
         await asyncio.sleep(WAIT)
 
