@@ -1,7 +1,0 @@
-{
-    "token": "token.token.token",
-    "username": "username",
-    "days_inactive": 30,
-    "wait_time": 10,
-    "send_message": true
-}
