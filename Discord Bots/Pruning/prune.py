@@ -65,3 +65,9 @@ try:
     client.run(TOKEN)
 except discord.DiscordException:
     print("Error: Failed to connect to discord. Check your token.")
+
+
+'''
+NOTES
+- run in a tmux session perpetually
+'''
