@@ -13,13 +13,13 @@ with open('config.json', 'r') as config:
     DAYS = information['days_inactive']
     WAIT = information['wait_time']
     MESSAGE = information['send_message']
+    CHANNEL = information['channel']
 
 # client object creation
 client = discord.Client()
 
+
 # continually checks for and kicks members that were inactive for 30 days
-
-
 async def clean_server():
     await client.wait_until_ready()
     while (client.is_closed):
@@ -27,16 +27,18 @@ async def clean_server():
             members_kicked = await guild.prune_members(days=DAYS, compute_prune_count=True, reason=f"{DAYS} days of inactivity")
             # send message if users are kicked and if client specifies
             if (MESSAGE and members_kicked):
-                #plural in message
+                # plural in message
                 if (members_kicked == 1):
                     kick_message = (
                         f'{members_kicked} member pruned for {DAYS} days of inactivity')
                 else:
                     kick_message = (
                         f'{members_kicked} members pruned for {DAYS} days of inactivity')
-                # send message to all channels in each guild regarding the prunning
+
+                # send message to correct channel
                 for channel in guild.text_channels:
-                    await channel.send(kick_message)
+                    if channel == CHANNEL:
+                        await channel.send(kick_message)
         # wait WAIT seconds before checking for inactive members again
         await asyncio.sleep(WAIT)
 
@@ -47,15 +49,20 @@ async def on_message(message):
     if message.author.name != OWNER:
         return
 
-    if message.content.startswith('.stop'):
+    if (message.content.startswith('.stop')) and (message.channel == CHANNEL):
         await client.logout()
 
+
 # lets you know that the bot is running
-
-
 @client.event
 async def on_ready():
-    print("Bot is up and will contunually prune inactive users.")
+    for guild in client.guilds:
+        print(f"Guild: {guild}")
+        for channel in guild.text_channels:
+            print(f"Channel: {channel}")
+            if str(channel).lower() in CHANNEL.lower():
+                print('Channel found. Bot running.')
+                await channel.send("Bot is up and will contunually prune inactive users.")
 
 # calls the background event that kicks inactive users
 client.loop.create_task(clean_server())
