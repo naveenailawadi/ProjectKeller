@@ -14,6 +14,7 @@ with open('config.json', 'r') as config:
     WAIT = information['wait_time']
     MESSAGE = information['send_message']
     CHANNEL = information['channel']
+    ROLES = information['roles']
 
 # client object creation
 client = discord.Client()
@@ -24,7 +25,11 @@ async def clean_server():
     await client.wait_until_ready()
     while (client.is_closed):
         for guild in client.guilds:
-            members_kicked = await guild.prune_members(days=DAYS, compute_prune_count=True, reason=f"{DAYS} days of inactivity")
+            # get all the roles to prune for
+            roles = guild.roles
+
+            members_kicked = await guild.prune_members(days=DAYS, compute_prune_count=True, roles=roles,
+                                                       reason=f"{DAYS} days of inactivity")
             # send message if users are kicked and if client specifies
             if (MESSAGE and members_kicked):
                 # plural in message
@@ -59,9 +64,8 @@ async def on_ready():
     for guild in client.guilds:
         print(f"Guild: {guild}")
         for channel in guild.text_channels:
-            print(f"Channel: {channel}")
             if str(channel).lower() in CHANNEL.lower():
-                print('Channel found. Bot running.')
+                print(f"Channel found. Bot running in {channel}.")
                 await channel.send("Bot is up and will contunually prune inactive users.")
 
 # calls the background event that kicks inactive users
