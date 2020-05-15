@@ -14,7 +14,6 @@ with open('config.json', 'r') as config:
     WAIT = information['wait_time']
     MESSAGE = information['send_message']
     CHANNEL = information['channel']
-    ROLES = information['roles']
 
 # client object creation
 client = discord.Client()
