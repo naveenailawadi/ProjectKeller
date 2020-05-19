@@ -9,6 +9,7 @@ with open('config.json', 'r') as config:
 
     # load the data into constants
     TOKEN = information['token']
+    GAMES = information['games']
 
 # create the bot
 client = discord.Client()
@@ -26,21 +27,27 @@ async def on_ready():
 # create an event for when people join games
 @client.event
 async def on_member_update(before, after):
-    print('Member updated.')
-    old_activities = before.activities
-    new_activities = after.activities
+    old_activities = list(before.activities)
+    new_activities = list(after.activities)
 
-    try:
+    # only keep going if there is an item in the list
+    if len(old_activities) > 0:
         # get the game
-        old_game = old_activities.Activity
-        new_game = new_activities.Activity
+        old_activity = old_activities[0]
+    else:
+        return
 
-        print(f"old game: {old_game}")
-        print(f"new game: {new_game}")
+    if 'activity' == str(type(old_activity)).split('.')[-1][:-2].lower():
+        old_game = old_activity.name
+    else:
+        return
 
-        # if the activity is different, get the
-    except AttributeError:
-        print(f'No new activity found. Instead found {old_activities}')
+    if old_game in GAMES:
+        old_party = old_activity.party
+        if len(old_party) > 0:
+            print(f"Party: {old_party}")
+    else:
+        return
 
 
 client.run(TOKEN)
