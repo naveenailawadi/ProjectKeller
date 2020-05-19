@@ -1,10 +1,14 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
 
 Base = declarative_base()
-
 engine = create_engine('sqlite:///reviews.db', echo=True)
+
+Session = sessionmaker()
+Session.configure(bind=engine)
+
+session = Session()
 
 
 # create a table for all users
@@ -14,20 +18,17 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     gamertag = Column(String)
 
-    review_sent = relationship("Review", back_populates="reviewer")
-    review_received = relationship("Review", back_populates="reviewee")
-
 
 # create a table for reviews
 class Review(Base):
     __tablename__ = 'review'
 
     id = Column(Integer, primary_key=True)
-    text = Column(String)
+    text = Column(String, default=None)
     rating = Column(Integer)
 
-    reviewer_id = Column(Integer, ForeignKey('user.id'))
-    reviewer = relationship("User", back_populates="review_sent")
+    reviewer_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    reviewer = relationship("User", foreign_keys=[reviewer_id])
 
-    reviewee_id = Column(Integer, ForeignKey('user.id'))
-    reviewee = relationship("User", back_populates="review_received")
+    reviewee_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    reviewee = relationship("User", foreign_keys=[reviewee_id])
