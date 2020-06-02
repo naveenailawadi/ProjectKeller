@@ -29,6 +29,7 @@ async def clean_server():
 
             members_kicked = await guild.prune_members(days=DAYS, compute_prune_count=True, roles=roles,
                                                        reason=f"{DAYS} days of inactivity")
+
             # send message if users are kicked and if client specifies
             if (MESSAGE and members_kicked):
                 # plural in message
@@ -43,6 +44,7 @@ async def clean_server():
                 for channel in guild.text_channels:
                     if channel == CHANNEL:
                         await channel.send(kick_message)
+                        print(kick_message)
         # wait WAIT seconds before checking for inactive members again
         await asyncio.sleep(WAIT)
 
