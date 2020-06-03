@@ -1,6 +1,7 @@
 import discord
 import asyncio
 import json
+import datetime
 
 # create constants with configuration file
 with open('config.json', 'r') as config:
@@ -22,13 +23,31 @@ client = discord.Client()
 # continually checks for and kicks members that were inactive for 30 days
 async def clean_server():
     await client.wait_until_ready()
+
+    # setting time objects
+    current = datetime.datetime.now()
+    compareable = datetime.timedelta(days=DAYS)
+
     while (client.is_closed):
         for guild in client.guilds:
-            # get all the roles to prune for
-            roles = guild.roles
+            members_kicked = 0
 
-            members_kicked = await guild.prune_members(days=DAYS, compute_prune_count=True, roles=roles,
-                                                       reason=f"{DAYS} days of inactivity")
+            # checking each member individually
+            for member in guild.members:
+                # checking if they joined recently
+                join_recently = ((current - member.joined_at) < compareable)
+
+                # checking if they recently sent messages
+                recent_message = False
+                for channel in guild.text_channels:
+                    async for message in channel.history(limit=1000000):
+                        if((current - message.created_at < compareable) and (message.author == member)):
+                            recent_message = True
+
+                #kicks and counts if user didnt send a message recently and didnt join recently
+                if(not(recent_message or join_recently)):
+                    await guild.kick(member, reason=f"{DAYS} days of inactivity.")
+                    members_kicked = members_kicked + 1
 
             # send message if users are kicked and if client specifies
             if (MESSAGE and members_kicked):
@@ -42,7 +61,7 @@ async def clean_server():
 
                 # send message to correct channel
                 for channel in guild.text_channels:
-                    if channel == CHANNEL:
+                    if str(channel) == CHANNEL:
                         await channel.send(kick_message)
                         print(kick_message)
         # wait WAIT seconds before checking for inactive members again
@@ -55,7 +74,7 @@ async def on_message(message):
     if message.author.name != OWNER:
         return
 
-    if (message.content.startswith('.stop')) and (message.channel == CHANNEL):
+    if (message.content.startswith('.stop')) and (str(message.channel) == CHANNEL):
         await client.logout()
 
 
