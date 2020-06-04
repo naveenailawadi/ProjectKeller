@@ -1,3 +1,12 @@
 Guild: Accusers of da Brethren
 Channel found. Bot running in admins-only.
-Could not find channel: id-98-gambit-prime
+Task exception was never retrieved
+future: <Task finished coro=<clean_server() done, defined at prune.py:26> exception=Forbidden('403 Forbidden (error code: 50013): Missing Permissions',)>
+Traceback (most recent call last):
+  File "prune.py", line 62, in clean_server
+    await guild.kick(member, reason=f"{DAYS} days of inactivity.")
+  File "/usr/local/lib/python3.6/dist-packages/discord/guild.py", line 1682, in kick
+    await self._state.http.kick(user.id, self.id, reason=reason)
+  File "/usr/local/lib/python3.6/dist-packages/discord/http.py", line 221, in request
+    raise Forbidden(r, data)
+discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions

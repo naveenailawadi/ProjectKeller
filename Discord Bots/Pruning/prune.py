@@ -1,5 +1,5 @@
 import discord
-from discord.errors import NotFound
+from discord.errors import NotFound, Forbidden
 import asyncio
 import json
 import datetime
@@ -59,7 +59,8 @@ async def clean_server():
 
                 # kicks and counts if user didnt send a message recently and didnt join recently
                 if(not(recent_message or join_recently)):
-                    await guild.kick(member, reason=f"{DAYS} days of inactivity.")
+                    # await guild.kick(member, reason=f"{DAYS} days of inactivity.")
+                    print(f"Kicking {member}")
                     members_kicked = members_kicked + 1
 
             # send message if users are kicked and if client specifies
