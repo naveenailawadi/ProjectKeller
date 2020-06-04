@@ -3,6 +3,7 @@ from discord.errors import NotFound
 import asyncio
 import json
 import datetime
+import time
 
 # create constants with configuration file
 with open('config.json', 'r') as config:
@@ -30,6 +31,7 @@ async def clean_server():
     comparable = datetime.timedelta(days=DAYS)
 
     while (client.is_closed):
+        start = time.time()
         for guild in client.guilds:
             members_kicked = 0
 
@@ -68,8 +70,14 @@ async def clean_server():
                     if str(channel) == CHANNEL:
                         await channel.send(kick_message)
                         print(kick_message)
+
+        end = time.time()
         # wait WAIT seconds before checking for inactive members again
-        await asyncio.sleep(WAIT)
+        adjusted_wait = int(WAIT - (end - start))
+        if adjusted_wait < 0:
+            await asyncio.sleep(1)
+        else:
+            await asyncio.sleep(adjusted_wait)
 
 
 # when you type ".stop" the program ends
