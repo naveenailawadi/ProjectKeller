@@ -1,12 +1,32 @@
 Guild: Accusers of da Brethren
 Channel found. Bot running in admins-only.
-Task exception was never retrieved
-future: <Task finished coro=<clean_server() done, defined at prune.py:26> exception=Forbidden('403 Forbidden (error code: 50013): Missing Permissions',)>
-Traceback (most recent call last):
-  File "prune.py", line 62, in clean_server
-    await guild.kick(member, reason=f"{DAYS} days of inactivity.")
-  File "/usr/local/lib/python3.6/dist-packages/discord/guild.py", line 1682, in kick
-    await self._state.http.kick(user.id, self.id, reason=reason)
-  File "/usr/local/lib/python3.6/dist-packages/discord/http.py", line 221, in request
-    raise Forbidden(r, data)
-discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
+Kicking Dyno#3861
+Kicking The17thCoolestName#4310
+Kicking Mikey mouse#5651
+Kicking rex#5571
+Kicking donymck#7724
+Kicking OwnCash2717408#0909
+Kicking slayer#0140
+Kicking Huevos For Sale#6124
+Kicking IfooledU7#3174
+Kicking OctoberxLive#4988
+Kicking LittleGamer729#3727
+Kicking jk brando jk#1694
+Kicking Neogalik#5952
+Kicking Izzy#2781
+Kicking Forever Sourin#7715
+Kicking LeonardosSupper#2783
+Kicking Yoshikage Kira#6449
+Kicking Dayday5290#4265
+Kicking X AM DADDY X209#4359
+Kicking kayla🍞✨#8184
+Kicking Fenrirsúlfr#7156
+Kicking iMuxtang#7098
+Kicking Jag#7015
+Kicking Ike RageEdge#7668
+Kicking Mark M.#5753
+Kicking Icyiannaa#4151
+Kicking Im mad weak#1412
+27 members pruned for 30 days of inactivity
+Guild: Accusers of da Brethren
+Channel found. Bot running in admins-only.
