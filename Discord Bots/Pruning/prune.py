@@ -34,6 +34,7 @@ async def clean_server():
 
             # checking each member individually
             for member in guild.members:
+
                 # checking if they joined recently
                 join_recently = ((current - member.joined_at) < compareable)
 
@@ -44,7 +45,7 @@ async def clean_server():
                         if((current - message.created_at < compareable) and (message.author == member)):
                             recent_message = True
 
-                #kicks and counts if user didnt send a message recently and didnt join recently
+                # kicks and counts if user didnt send a message recently and didnt join recently
                 if(not(recent_message or join_recently)):
                     await guild.kick(member, reason=f"{DAYS} days of inactivity.")
                     members_kicked = members_kicked + 1
