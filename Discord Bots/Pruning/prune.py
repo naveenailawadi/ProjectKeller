@@ -1,7 +1,9 @@
 import discord
+from discord.errors import NotFound
 import asyncio
 import json
 import datetime
+import time
 
 # create constants with configuration file
 with open('config.json', 'r') as config:
@@ -26,24 +28,34 @@ async def clean_server():
 
     # setting time objects
     current = datetime.datetime.now()
-    compareable = datetime.timedelta(days=DAYS)
+    comparable = datetime.timedelta(days=DAYS)
 
     while (client.is_closed):
+        start = time.time()
         for guild in client.guilds:
             members_kicked = 0
 
+            users_with_msg = []
+
+            # creating a list of users who recently sent messages
+            for channel in guild.text_channels:
+                try:
+                    async for message in channel.history(limit=100000):
+                        if((current - message.created_at) < comparable):
+                            if (not(message.author in users_with_msg)):
+                                users_with_msg.append(message.author)
+                except NotFound:
+                    print(f"Could not find channel: {str(channel)}")
+
             # checking each member individually
             for member in guild.members:
-
                 # checking if they joined recently
-                join_recently = ((current - member.joined_at) < compareable)
+                join_recently = ((current - member.joined_at) < comparable)
 
                 # checking if they recently sent messages
                 recent_message = False
-                for channel in guild.text_channels:
-                    async for message in channel.history(limit=1000000):
-                        if((current - message.created_at < compareable) and (message.author == member)):
-                            recent_message = True
+                if member in users_with_msg:
+                    recent_message = True
 
                 # kicks and counts if user didnt send a message recently and didnt join recently
                 if(not(recent_message or join_recently)):
@@ -65,8 +77,14 @@ async def clean_server():
                     if str(channel) == CHANNEL:
                         await channel.send(kick_message)
                         print(kick_message)
+
+        end = time.time()
         # wait WAIT seconds before checking for inactive members again
-        await asyncio.sleep(WAIT)
+        adjusted_wait = int(WAIT - (end - start))
+        if adjusted_wait < 0:
+            await asyncio.sleep(1)
+        else:
+            await asyncio.sleep(adjusted_wait)
 
 
 # when you type ".stop" the program ends
