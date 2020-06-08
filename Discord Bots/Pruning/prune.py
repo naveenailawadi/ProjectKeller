@@ -4,6 +4,7 @@ import asyncio
 import json
 import datetime
 import time
+from datetime import datetime as dt
 
 # create constants with configuration file
 with open('config.json', 'r') as config:
@@ -81,6 +82,10 @@ async def clean_server():
                         await channel.send(kick_message)
                         print(kick_message)
 
+            else:
+                date = dt.now()
+                print(f"No members pruned on {date.month}/{date.day}/{date.year}")
+
         end = time.time()
         # wait WAIT seconds before checking for inactive members again
         adjusted_wait = int(WAIT - (end - start))
@@ -88,6 +93,7 @@ async def clean_server():
             await asyncio.sleep(1)
         else:
             await asyncio.sleep(adjusted_wait)
+            print(f"Sleeping for {int(adjusted_wait / (60 * 24))} hours")
 
 
 # when you type ".stop" the program ends
