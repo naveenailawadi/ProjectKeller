@@ -1,6 +1,5 @@
 import discord
 from discord.errors import NotFound, Forbidden
-import asyncio
 import json
 import datetime
 import time
@@ -90,10 +89,10 @@ async def clean_server():
         # wait WAIT seconds before checking for inactive members again
         adjusted_wait = int(WAIT - (end - start))
         if adjusted_wait < 0:
-            await asyncio.sleep(1)
+            time.sleep(1)
         else:
-            await asyncio.sleep(adjusted_wait)
-            print(f"Sleeping for {int(adjusted_wait / (60 * 24))} hours")
+            print(f"Sleeping for {int(adjusted_wait / (60 * 60))} hours")
+            time.sleep(adjusted_wait)
 
 
 # when you type ".stop" the program ends
