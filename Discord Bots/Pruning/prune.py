@@ -22,17 +22,15 @@ with open('config.json', 'r') as config:
 client = discord.Client()
 message_sent = False
 
+
 # continually checks for and kicks members that were inactive for 30 days
-
-
 async def clean_server():
     await client.wait_until_ready()
 
-    # setting time objects
-    current = datetime.datetime.now()
-    comparable = datetime.timedelta(days=DAYS)
-
     while (client.is_closed):
+        # setting time objects
+        current = datetime.datetime.now()
+        comparable = datetime.timedelta(days=DAYS)
         start = time.time()
         for guild in client.guilds:
             members_kicked = 0
