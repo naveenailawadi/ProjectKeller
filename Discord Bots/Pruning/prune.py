@@ -20,9 +20,11 @@ with open('config.json', 'r') as config:
 
 # client object creation
 client = discord.Client()
-
+message_sent = False
 
 # continually checks for and kicks members that were inactive for 30 days
+
+
 async def clean_server():
     await client.wait_until_ready()
 
@@ -108,12 +110,14 @@ async def on_message(message):
 # lets you know that the bot is running
 @client.event
 async def on_ready():
-    for guild in client.guilds:
-        print(f"Guild: {guild}")
-        for channel in guild.text_channels:
-            if str(channel).lower() in CHANNEL.lower():
-                print(f"Channel found. Bot running in {channel}.")
-                await channel.send("Bot is up and will contunually prune inactive users.")
+    if not message_sent:
+        for guild in client.guilds:
+            print(f"Guild: {guild}")
+            for channel in guild.text_channels:
+                if (str(channel).lower() in CHANNEL.lower()):
+                    print(f"Channel found. Bot running in {channel}.")
+                    await channel.send("Bot is up and will contunually prune inactive users.")
+                    message_sent = True
 
 # calls the background event that kicks inactive users
 client.loop.create_task(clean_server())
