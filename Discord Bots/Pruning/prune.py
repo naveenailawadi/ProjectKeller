@@ -106,18 +106,17 @@ async def on_message(message):
     if (message.content.startswith('.stop')) and (str(message.channel) == CHANNEL):
         await client.logout()
 
-
+'''
 # lets you know that the bot is running
 @client.event
 async def on_ready():
-    if not message_sent:
-        for guild in client.guilds:
-            print(f"Guild: {guild}")
-            for channel in guild.text_channels:
-                if (str(channel).lower() in CHANNEL.lower()):
-                    print(f"Channel found. Bot running in {channel}.")
-                    await channel.send("Bot is up and will contunually prune inactive users.")
-                    message_sent = True
+    for guild in client.guilds:
+        print(f"Guild: {guild}")
+        for channel in guild.text_channels:
+            if (str(channel).lower() in CHANNEL.lower()):
+                print(f"Channel found. Bot running in {channel}.")
+                await channel.send("Bot is up and will contunually prune inactive users.")
+'''
 
 # calls the background event that kicks inactive users
 client.loop.create_task(clean_server())
