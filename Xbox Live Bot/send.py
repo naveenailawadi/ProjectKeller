@@ -54,7 +54,6 @@ to_send = list(recents - removables)
 sent_messages = []
 
 for gamertag in to_send:
-    '''
     try:
         sent = xbot.send_message(gamertag, MESSAGE)
 
@@ -70,7 +69,6 @@ for gamertag in to_send:
         time.sleep(30)
         pass
     time.sleep(10)
-    '''
     print(f"Simulated send to {gamertag}")
 
 
