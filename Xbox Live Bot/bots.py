@@ -14,7 +14,7 @@ import json
 from json.decoder import JSONDecodeError
 
 LOGIN = 'https://login.live.com/login.srf'
-XBOX_SITE = 'https://account.xbox.com/en-US/social?xr=shellnav'
+XBOX_SITE = 'https://account.xbox.com/en-us/Profile?xr=socialtwistnav'
 XBOX_HOME = 'https://www.xbox.com/en-US/'
 MESSAGING_URL = 'https://account.xbox.com/en-us/SkypeMessages'
 
@@ -61,15 +61,11 @@ class RecentScraper:
         # more code could go here in the future if it is necessary to navigate the xbox home page manually
 
     def get_recents(self, max_recents):
-        # click recent friends tab
-        friends_tab = self.driver.find_element_by_xpath('//a[@class="c-glyph glyph-people"]')
-        friends_tab.click()
-        time.sleep(2)
-
-        # get recent friends by changing the tab
-        friend_type_button = self.driver.find_element_by_xpath('//button[@class="c-action-trigger"]')
+        # get recent friends by changing the dropdown
+        friend_type_button = self.driver.find_element_by_xpath('//div[@class="friendsClubsList Carousel"]//button[@class="c-action-trigger"]')
         friend_type_button.click()
         time.sleep(1)
+
         recent_players_button = self.driver.find_element_by_xpath('//button[@id="RecentPlayers"]')
         recent_players_button.click()
         time.sleep(5)  # a lot of sleep is required here as it could potentially lag

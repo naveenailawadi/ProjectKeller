@@ -39,7 +39,8 @@ recents = set(scraper.get_recents(MAX_RECENTS))
 scraper.close_webdriver()
 
 # get people that have already been sent a message
-removables = record_manager.get_removables(BLOCK_START_TIME_UTC, BLOCK_STOP_TIME_UTC)
+removables = record_manager.get_removables(
+    BLOCK_START_TIME_UTC, BLOCK_STOP_TIME_UTC)
 
 recents = recents - removables
 
@@ -53,6 +54,7 @@ to_send = list(recents - removables)
 sent_messages = []
 
 for gamertag in to_send:
+    '''
     try:
         sent = xbot.send_message(gamertag, MESSAGE)
 
@@ -68,6 +70,8 @@ for gamertag in to_send:
         time.sleep(30)
         pass
     time.sleep(10)
+    '''
+    print(f"Simulated send to {gamertag}")
 
 
 # add the sent data to the dataframe

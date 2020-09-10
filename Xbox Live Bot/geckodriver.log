@@ -42,3 +42,21 @@
 Exiting due to channel error.
 [GFX1-]: Receive IPC close with reason=AbnormalShutdown
 Exiting due to channel error.
+1599698435703	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/mw/p8f3vdp51d1gdbrl1fn0lnnm0000gn/T/rust_mozprofileaTFx1u"
+1599698437848	Marionette	INFO	Listening on port 64261
+1599698437949	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://az725175.vo.msecnd.net/scripts/jsll-4.js, line 1: TypeError: document.body is null
+JavaScript error: https://cdnssl.clicktale.net/www/tc/crossdomainInclCEC.html?cookie=WRUIDCD03072018, line 36: SecurityError: The operation is insecure.
+console.error: "Store does not have a valid reducer. Make sure the argument passed to combineReducers is an object whose values are reducers."
+console.error: "Store does not have a valid reducer. Make sure the argument passed to combineReducers is an object whose values are reducers."
+console.error: "Store does not have a valid reducer. Make sure the argument passed to combineReducers is an object whose values are reducers."
+1599699198355	Marionette	INFO	Stopped listening on port 64261
+1599699204482	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/mw/p8f3vdp51d1gdbrl1fn0lnnm0000gn/T/rust_mozprofileRuqgiK"
+1599699206630	Marionette	INFO	Listening on port 51304
+1599699206722	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://cdnssl.clicktale.net/www/tc/crossdomainInclCEC.html?cookie=WRUIDCD03072018, line 36: SecurityError: The operation is insecure.
+1599699315640	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/mw/p8f3vdp51d1gdbrl1fn0lnnm0000gn/T/rust_mozprofile24POMV"
+1599699317688	Marionette	INFO	Listening on port 51968
+1599699317696	Marionette	WARN	TLS certificate errors will be ignored for this session
+1599699339575	Marionette	INFO	Stopped listening on port 51968
+1599699403063	Marionette	INFO	Stopped listening on port 51304
