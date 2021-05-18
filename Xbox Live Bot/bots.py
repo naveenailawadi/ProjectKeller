@@ -1,10 +1,10 @@
+from tools import ListManager
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from xbox.webapi.api.client import XboxLiveClient
 from xbox.webapi.authentication.manager import AuthenticationManager
 from xbox.webapi.api.provider.profile import ProfileProvider
 from xbox.webapi.api.provider.people import PeopleProvider
-from tools import ListManager
 from xboxapi.client import Client
 from requests.exceptions import ReadTimeout
 from random import shuffle
@@ -41,16 +41,19 @@ class RecentScraper:
         email_box.send_keys(self.email)
 
         # click next
-        next_button = self.driver.find_element_by_xpath('//input[@type="submit"]')
+        next_button = self.driver.find_element_by_xpath(
+            '//input[@type="submit"]')
         next_button.click()
         time.sleep(2)
 
         # enter the password
-        password_box = self.driver.find_element_by_xpath('//input[@type="password"]')
+        password_box = self.driver.find_element_by_xpath(
+            '//input[@type="password"]')
         password_box.send_keys(self.password)
 
         # click sign in
-        sign_in_button = self.driver.find_element_by_xpath('//input[@type="submit"]')
+        sign_in_button = self.driver.find_element_by_xpath(
+            '//input[@type="submit"]')
         sign_in_button.click()
         time.sleep(2)
 
@@ -62,16 +65,20 @@ class RecentScraper:
 
     def get_recents(self, max_recents):
         # get recent friends by changing the dropdown
-        friend_type_button = self.driver.find_element_by_xpath('//div[@class="friendsClubsList Carousel"]//button[@class="c-action-trigger"]')
+        friend_type_button = self.driver.find_element_by_xpath(
+            '//div[@class="friendsClubsList Carousel"]//button[@class="c-action-trigger"]')
         friend_type_button.click()
         time.sleep(1)
 
-        recent_players_button = self.driver.find_element_by_xpath('//button[@id="RecentPlayers"]')
+        recent_players_button = self.driver.find_element_by_xpath(
+            '//button[@id="RecentPlayers"]')
         recent_players_button.click()
-        time.sleep(5)  # a lot of sleep is required here as it could potentially lag
+        # a lot of sleep is required here as it could potentially lag
+        time.sleep(5)
 
         # get the recents
-        recents_raw = self.driver.find_elements_by_xpath('//ul//span[@class="name"]')[:max_recents + 1]
+        recents_raw = self.driver.find_elements_by_xpath(
+            '//ul//span[@class="name"]')[:max_recents + 1]
         recents = [tag.text for tag in recents_raw]
 
         return recents
@@ -79,7 +86,8 @@ class RecentScraper:
     def send_message(self, gamertag, message):
         # click the correct account
         try:
-            account = self.driver.find_element_by_xpath(f'//strong[@class="topic"][text()="{gamertag}"]')
+            account = self.driver.find_element_by_xpath(
+                f'//strong[@class="topic"][text()="{gamertag}"]')
         except NoSuchElementException:
             print(f"Unable to send message to {gamertag} (account not found)")
             return False
@@ -87,11 +95,13 @@ class RecentScraper:
         time.sleep(3)
 
         # send the message to the message bar
-        message_bar = self.driver.find_element_by_xpath('//input[@id="newmessageinput"]')
+        message_bar = self.driver.find_element_by_xpath(
+            '//input[@id="newmessageinput"]')
         message_bar.send_keys(message)
 
         # click send
-        send_button = self.driver.find_element_by_xpath('//button[@id="newmessage"]')
+        send_button = self.driver.find_element_by_xpath(
+            '//button[@id="newmessage"]')
         send_button.click()
         time.sleep(1)
 
@@ -149,18 +159,21 @@ class MicrosoftBot:
         # set the new info to a xbl client
         self.xbl_client = XboxLiveClient(
             self.auth_mgr.userinfo.userhash, self.auth_mgr.xsts_token.jwt, self.auth_mgr.userinfo.xuid)
-        self.profile_provider = ProfileProvider(self.xbl_client)  # not currently used but could be useful later
+        # not currently used but could be useful later
+        self.profile_provider = ProfileProvider(self.xbl_client)
         self.people_provider = PeopleProvider(self.xbl_client)
 
     # sends message to list of multiple users
     def send_message(self, message, users):
-        response = self.xbl_client.message.send_message(message, gamertags=users)
+        response = self.xbl_client.message.send_message(
+            message, gamertags=users)
 
         return response
 
     # create a function that gets xuids
     def get_xuid(self, gamertag):
-        profile = self.profile_provider.get_profile_by_gamertag(gamertag).json()
+        profile = self.profile_provider.get_profile_by_gamertag(
+            gamertag).json()
         try:
             xuid = profile['profileUsers'][0]['id']
         except KeyError:

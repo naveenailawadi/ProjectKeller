@@ -1,0 +1,4 @@
+selenium
+xbox-webapi
+requests
+pandas
