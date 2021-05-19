@@ -1,4 +1,4 @@
 selenium
-xbox-webapi
+xbox-webapi==1.1.8
 requests
 pandas
